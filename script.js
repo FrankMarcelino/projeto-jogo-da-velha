@@ -49,11 +49,18 @@ const fimJogo = (empate) => {
 }
 
 
+
 const checaPorVitoria = (jogadorAtual) => {
     return combinacoesVitoria.some((combinacoes) => {
         return combinacoes.every((index) => {
             return todasAsCelulas[index].classList.contains(jogadorAtual)
         })
+    })
+}
+
+const checaPorEmpate = () => {
+    return [...todasAsCelulas].every(celula => {
+        return celula.classList.contains('jogadorX') || celula.classList.contains('jogador0')
     })
 }
 
@@ -87,16 +94,19 @@ const cliqueMouse = (elemento) => {
 
     celula.classList.add(adicionaClasse)
     marca(celula, adicionaClasse)
+    // verificar por empate
+    const empatou = checaPorEmpate()
     // Checar por vitória
     const ganhou = checaPorVitoria(adicionaClasse)
     
     if(ganhou) {
         fimJogo(false)
-    }
-    // verificar por empate
-
-    // mudar o simbolo
-    trocaVez()
+    } else if (empatou) {
+        fimJogo(true)
+    } else {
+        // mudar o simbolo
+        trocaVez()
+    }    
 }
 
 iniciarJogo()
