@@ -3,7 +3,7 @@ const containerJogo = document.querySelector('.container-jogo')
 
 let vezDoCirculo;
 
-const combinacoes = [
+const combinacoesVitoria = [
     [0,1,2],
     [3,4,5],
     [6,7,8],
@@ -11,12 +11,12 @@ const combinacoes = [
     [1,4,7],
     [2,5,8],
     [0,4,8],
-    [2,4,6]
+    [2,4,6],
 ]
 
 const iniciarJogo = () => {
-    for (const celula of customElements) {
-        celula.addEventListener('click', cliqueMouse, { once: true} )
+    for (const celula of todasAsCelulas) {
+        celula.addEventListener('click', cliqueMouse, { once: true})
     }
 
     vezDoCirculo = false
@@ -24,7 +24,13 @@ const iniciarJogo = () => {
     containerJogo.classList.add('jogadorX')
 }
 
-const checaPorVitoria = (jogadorAtual)
+const checaPorVitoria = (jogadorAtual) => {
+    return combinacoesVitoria.some((combinacoes) => {
+        return combinacoes.every((index) => {
+            return todasAsCelulas[index].classList.contains(jogadorAtual)
+        })
+    })
+}
 
 const marca  = (celula, adicionaClasse) => {
     celula.classList.add(adicionaClasse)
@@ -51,15 +57,14 @@ const cliqueMouse = (elemento) => {
     celula.classList.add(adicionaClasse)
     marca(celula, adicionaClasse)
     // Checar por vitória
-
+    const ganhou = checaPorVitoria(adicionaClasse)
+    if(ganhou) {
+        console.log('Ganhou')
+    }
     // verificar por empate
 
     // mudar o simbolo
     trocaVez()
-}
-
-for (const celula of todasAsCelulas) {
-    celula.addEventListener('click', cliqueMouse, { once:true  } )
 }
 
 iniciarJogo()
