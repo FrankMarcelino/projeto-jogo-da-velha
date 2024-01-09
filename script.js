@@ -1,5 +1,7 @@
 const todasAsCelulas = document.querySelectorAll('.celula')
 const containerJogo = document.querySelector('.container-jogo')
+const msgDeVitoria = document.querySelector('.msg-de-vitoria')
+const msgVitoriaDisplay = document.querySelector('.mensagem-vencedor')
 
 let vezDoCirculo;
 
@@ -22,6 +24,18 @@ const iniciarJogo = () => {
     vezDoCirculo = false
 
     containerJogo.classList.add('jogadorX')
+}
+
+const fimJogo = (empate) => {
+    if (empate) {
+        msgDeVitoria.innerText = 'Empate'
+    } else {
+        msgDeVitoria.innerText = vezDoCirculo 
+        ? 'Bolinha Ganhou!' 
+        : 'X Ganhou!'
+    }
+
+    msgVitoriaDisplay.classList.add('mostra-vencedor')
 }
 
 const checaPorVitoria = (jogadorAtual) => {
@@ -58,8 +72,9 @@ const cliqueMouse = (elemento) => {
     marca(celula, adicionaClasse)
     // Checar por vitória
     const ganhou = checaPorVitoria(adicionaClasse)
+    
     if(ganhou) {
-        console.log('Ganhou')
+        fimJogo(false)
     }
     // verificar por empate
 
