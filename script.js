@@ -2,6 +2,9 @@ const todasAsCelulas = document.querySelectorAll('.celula')
 const containerJogo = document.querySelector('.container-jogo')
 const msgDeVitoria = document.querySelector('.msg-de-vitoria')
 const msgVitoriaDisplay = document.querySelector('.mensagem-vencedor')
+const botaoReiniciar = document.querySelector('.botao-reiniciar')
+
+
 
 let vezDoCirculo;
 
@@ -17,13 +20,20 @@ const combinacoesVitoria = [
 ]
 
 const iniciarJogo = () => {
+    vezDoCirculo = false
+
+
     for (const celula of todasAsCelulas) {
+        celula.classList.remove('jogadorX')
+        celula.classList.remove('jogador0')
+        celula.addEventListener('click', cliqueMouse)
         celula.addEventListener('click', cliqueMouse, { once: true})
     }
 
-    vezDoCirculo = false
 
+    dizJogadorDaVez()
     containerJogo.classList.add('jogadorX')
+    msgVitoriaDisplay.classList.remove('mostrar-vencedor')
 }
 
 const fimJogo = (empate) => {
@@ -35,8 +45,9 @@ const fimJogo = (empate) => {
         : 'X Ganhou!'
     }
 
-    msgVitoriaDisplay.classList.add('mostra-vencedor')
+    msgVitoriaDisplay.classList.add('mostrar-vencedor')
 }
+
 
 const checaPorVitoria = (jogadorAtual) => {
     return combinacoesVitoria.some((combinacoes) => {
@@ -50,9 +61,8 @@ const marca  = (celula, adicionaClasse) => {
     celula.classList.add(adicionaClasse)
 } 
 
-const trocaVez = () => {
-    vezDoCirculo = !vezDoCirculo
 
+const dizJogadorDaVez = () => {
     containerJogo.classList.remove('jogador0')
     containerJogo.classList.remove('jogadorX')
 
@@ -61,6 +71,13 @@ const trocaVez = () => {
     } else {
         containerJogo.classList.add('jogadorX')
     }
+}
+
+const trocaVez = () => {
+    vezDoCirculo = !vezDoCirculo
+
+    dizJogadorDaVez()
+  
 }
 
 const cliqueMouse = (elemento) => {
@@ -83,3 +100,4 @@ const cliqueMouse = (elemento) => {
 }
 
 iniciarJogo()
+botaoReiniciar.addEventListener('click', iniciarJogo)
