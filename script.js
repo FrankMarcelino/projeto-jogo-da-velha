@@ -1,7 +1,30 @@
 const todasAsCelulas = document.querySelectorAll('.celula')
 const containerJogo = document.querySelector('.container-jogo')
 
-let vezDoCirculo = false;
+let vezDoCirculo;
+
+const combinacoes = [
+    [0,1,2],
+    [3,4,5],
+    [6,7,8],
+    [0,3,6],
+    [1,4,7],
+    [2,5,8],
+    [0,4,8],
+    [2,4,6]
+]
+
+const iniciarJogo = () => {
+    for (const celula of customElements) {
+        celula.addEventListener('click', cliqueMouse, { once: true} )
+    }
+
+    vezDoCirculo = false
+
+    containerJogo.classList.add('jogadorX')
+}
+
+const checaPorVitoria = (jogadorAtual)
 
 const marca  = (celula, adicionaClasse) => {
     celula.classList.add(adicionaClasse)
@@ -38,3 +61,5 @@ const cliqueMouse = (elemento) => {
 for (const celula of todasAsCelulas) {
     celula.addEventListener('click', cliqueMouse, { once:true  } )
 }
+
+iniciarJogo()
